@@ -1,0 +1,13 @@
+[package]
+name = "elasticlab"
+version = "0.1.0"
+authors = ["noahmmcgivern"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rpassword = "5.0.0"
+serde = { version = "1.0.116", features = ["derive"] }
+serde_json = "1.0.58"
+structopt = "0.3.19"
