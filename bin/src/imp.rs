@@ -30,46 +30,46 @@ pub fn import() {
 
     if !utils::infra_dir_path().exists() {
         println!("Could not find infrastructure folder (infra)");
-        return
+        return;
     }
 
     clear_stage();
-    
+
     let file_name = "variables.tf";
     let contents = read_string_from_infra_file(file_name);
     utils::write_string_to_stage_file(file_name.to_string(), contents);
-    
+
     let lockfile = lockfile::read_lock_file();
-    
+
     let file_name = "dynamodb.tf";
     let contents = read_string_from_infra_file(file_name);
     for i in lockfile.dynamodb.iter() {
         let name = i.name.to_owned();
         let file_name = name.clone() + ".tf";
         let contents = contents.replace("NAME", &name);
-        
+
         utils::write_string_to_stage_file(file_name, contents)
     }
-    
+
     let file_name = "emr.tf";
     let contents = read_string_from_infra_file(file_name);
     for i in lockfile.emr.iter() {
         let name = i.name.to_owned();
         let file_name = name.clone() + ".tf";
         let contents = contents.replace("NAME", &name);
-        
+
         utils::write_string_to_stage_file(file_name, contents)
     }
-    
+
     let file_name = "s3.tf";
     let contents = read_string_from_infra_file(file_name);
     for i in lockfile.s3.iter() {
         let name = i.name.to_owned();
         let file_name = name.clone() + ".tf";
         let contents = contents.replace("NAME", &name);
-        
+
         utils::write_string_to_stage_file(file_name, contents)
     }
-    
+
     println!("Staged infrastructure from lockfile");
 }

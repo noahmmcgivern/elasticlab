@@ -12,10 +12,10 @@ pub fn destroy() {
 
     let path = utils::stage_dir_path();
     Command::new("terraform")
-            .arg("destroy")
-            .arg("-auto-approve")
-            .arg("-var-file=./secret.tfvars")
-            .current_dir(path)
-            .status()
-            .unwrap();
+        .arg("destroy")
+        .arg("-auto-approve")
+        .arg("-var-file=./secret.tfvars")
+        .current_dir(path)
+        .status()
+        .unwrap();
 }

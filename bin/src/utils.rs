@@ -16,7 +16,7 @@ pub fn read_path_to_string(pathbuf: &PathBuf) -> String {
     match File::open(path) {
         Err(why) => match why.kind() {
             ErrorKind::NotFound => panic!("Could not find {}", path_str),
-            _ => panic!("Could not open {}: {}", path_str, why)
+            _ => panic!("Could not open {}: {}", path_str, why),
         },
         Ok(mut file) => {
             let mut s = String::new();
@@ -24,7 +24,7 @@ pub fn read_path_to_string(pathbuf: &PathBuf) -> String {
                 Err(why) => panic!("Could not read {}: {}", path_str, why),
                 Ok(_) => s,
             }
-        },
+        }
     }
 }
 
@@ -37,8 +37,8 @@ pub fn read_string_from_secret_file() -> String {
             ErrorKind::NotFound => {
                 key::key();
                 read_string_from_secret_file()
-            },
-            _ => panic!("Could not open {}: {}", path_str, why)
+            }
+            _ => panic!("Could not open {}: {}", path_str, why),
         },
         Ok(mut file) => {
             let mut s = String::new();
@@ -46,7 +46,7 @@ pub fn read_string_from_secret_file() -> String {
                 Err(why) => panic!("Could not read {}: {}", path_str, why),
                 Ok(_) => s,
             }
-        },
+        }
     }
 }
 
@@ -116,7 +116,7 @@ fn work_dir_path() -> PathBuf {
             p.push(home);
             p.push(".elasticlab");
             p
-        },
-        None => panic!("Cannot get home directory")
+        }
+        None => panic!("Cannot get home directory"),
     }
 }

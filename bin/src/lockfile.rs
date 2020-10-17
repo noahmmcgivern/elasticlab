@@ -1,8 +1,8 @@
+use serde::{Deserialize, Serialize};
 use std::fs::File;
 use std::io::ErrorKind;
 use std::io::Read;
 use std::io::Write;
-use serde::{Serialize, Deserialize};
 
 use crate::utils;
 
@@ -87,7 +87,7 @@ pub fn read_lock_file() -> Lockfile {
             ErrorKind::NotFound => {
                 write_lock_file();
                 read_lock_file()
-            },
+            }
             _ => {
                 panic!("Could not open lockfile: {}", why);
             }
@@ -101,7 +101,7 @@ pub fn read_lock_file() -> Lockfile {
                     Ok(l) => l,
                 },
             }
-        },
+        }
     }
 }
 
@@ -117,7 +117,9 @@ pub fn write_lock_file() -> File {
 
     let mut f = create_lock_file();
 
-    if exists { f } else {
+    if exists {
+        f
+    } else {
         let l = Lockfile::default();
         let s = serde_json::to_string(&l).unwrap();
 

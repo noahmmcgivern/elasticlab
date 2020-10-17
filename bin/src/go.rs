@@ -16,17 +16,20 @@ pub fn go() {
         .arg("-out=./plan")
         .arg("-var-file=./secret.tfvars")
         .current_dir(path)
-        .output() {
-            Err(why) => panic!("Cannot plan: {}", why),
-            Ok(s) => {
-                let s = std::str::from_utf8(&s.stdout).unwrap();
-                String::from(s)
-            },
-        };
+        .output()
+    {
+        Err(why) => panic!("Cannot plan: {}", why),
+        Ok(s) => {
+            let s = std::str::from_utf8(&s.stdout).unwrap();
+            String::from(s)
+        }
+    };
 
     println!("{}", s);
 
-    let s = if s.contains("No changes.") { String::new() } else {
+    let s = if s.contains("No changes.") {
+        String::new()
+    } else {
         let count = s.lines().count();
         let remove_margin = 6;
 
@@ -47,17 +50,18 @@ pub fn go() {
 
     if s.is_empty() {
         println!("No changes");
-        return
+        return;
     }
 
     println!("{}", &s);
 
     match Command::new("terraform")
-                  .arg("apply")
-                  .arg("./plan")
-                  .current_dir(path)
-                  .status() {
-                    Err(why) => panic!("Cannot apply: {}", why),
-                    Ok(_) => (),
-                  }
+        .arg("apply")
+        .arg("./plan")
+        .current_dir(path)
+        .status()
+    {
+        Err(why) => panic!("Cannot apply: {}", why),
+        Ok(_) => (),
+    }
 }

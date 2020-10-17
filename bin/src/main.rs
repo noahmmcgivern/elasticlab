@@ -6,8 +6,8 @@ mod get;
 mod go;
 mod imp;
 mod init;
-mod lockfile;
 mod key;
+mod lockfile;
 mod opt;
 mod set;
 mod utils;
@@ -41,9 +41,7 @@ enum Cmd {
             case_insensitive = true
         )]
         infrastructure: Inf,
-        #[structopt(
-            help = "Resource number"
-        )]
+        #[structopt(help = "Resource number")]
         number: u8,
         #[structopt(
             help = "Option key",
@@ -51,9 +49,7 @@ enum Cmd {
             case_insensitive = true
         )]
         option: Opti,
-        #[structopt(
-            help = "Option value"
-        )]
+        #[structopt(help = "Option value")]
         value: String,
     },
     #[structopt(about = "Set infrastructure count")]
@@ -64,9 +60,7 @@ enum Cmd {
             case_insensitive = true
         )]
         infrastructure: Inf,
-        #[structopt(
-            help = "Number of resources"
-        )]
+        #[structopt(help = "Number of resources")]
         number: u8,
     },
 }
@@ -111,14 +105,14 @@ fn main() {
             infrastructure,
             number,
             option,
-            value
+            value,
         } => opt::opt(infrastructure, number, option, value),
         Cmd::Set {
             infrastructure,
-            number
+            number,
         } => {
             set::set(infrastructure, number);
             imp::import();
-        },
-    }
+        }
+    };
 }

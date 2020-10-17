@@ -17,7 +17,7 @@ fn set_credentials(access_key: &str, secret_key: &str) {
 
     if !path.exists() {
         println!("Could not find infrastructure folder (infra)");
-        return
+        return;
     }
 
     path.push("secret.tfvars.template");
