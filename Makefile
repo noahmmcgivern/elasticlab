@@ -1,5 +1,14 @@
-make:
+prod:
+	make build run
+
+dev:
 	make up snap
+
+build:
+	docker build -t elasticlab --rm .
+
+run:
+	docker run -it --name elasticlab --rm elasticlab
 
 up:
 	vagrant up

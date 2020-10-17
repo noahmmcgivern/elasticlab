@@ -24,8 +24,8 @@ Vagrant.configure("2") do |c|
   ##################
 
   c.vm.synced_folder ".", "/vagrant", disabled: true
-  c.vm.synced_folder "./bin", "/el/bin"
-  c.vm.synced_folder "./infra", "/home/vagrant/infra"
+  c.vm.synced_folder "./bin", "/home/vagrant/bin"
+  c.vm.synced_folder "./infra", "/home/vagrant/.elasticlab/infra"
 
   ####################
   # HOST INFORMATION #
@@ -43,12 +43,17 @@ Vagrant.configure("2") do |c|
 
   c.vm.provision "shell", inline: "apt-get clean"
   c.vm.provision "shell", inline: "apt-get update"
-  c.vm.provision "shell", path: "provision/dependencies.sh"
+
   c.vm.provision "shell", path: "provision/upgrade.sh"
+  c.vm.provision "shell", path: "provision/dependencies.sh"
+
   c.vm.provision "shell", privileged: false, path: "provision/rust.sh"
   c.vm.provision "shell", path: "provision/terraform.sh"
 
-  c.vm.provision "shell", privileged: false, inline: "cd /el/bin && cargo b"
-  c.vm.provision "shell", inline: "ln -s /el/bin/target/debug/elasticlab /usr/local/bin/el"
-  c.vm.provision "shell", inline: "chown -R vagrant:vagrant /el"
+  # Pre-Build
+  c.vm.provision "shell", privileged: false, inline: "cd /home/vagrant/bin && cargo b"
+  c.vm.provision "shell", inline: "ln -s /home/vagrant/bin/target/debug/elasticlab /usr/local/bin/el"
+
+  # Change ownership
+  c.vm.provision "shell", inline: "chown -R vagrant:vagrant /home/vagrant"
 end

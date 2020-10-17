@@ -1,0 +1,2 @@
+./bin/target/
+./infra/secret.tfvars
